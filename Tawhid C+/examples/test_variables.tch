@@ -1,0 +1,14 @@
+// Test variables and arithmetic
+import stdio;
+
+func main() -> int {
+    x := 10;
+    y := 20;
+    sum := x + y;
+    
+    printf("x = %d\n", x);
+    printf("y = %d\n", y);
+    printf("sum = %d\n", sum);
+    
+    return 0;
+}

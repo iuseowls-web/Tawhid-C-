@@ -1,0 +1,4 @@
+import stdio;
+func main() int {
+return 0;
+}

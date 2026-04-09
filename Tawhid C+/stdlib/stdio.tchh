@@ -1,0 +1,21 @@
+/*
+ * Tawhid C+ Standard Library - stdio.tchh
+ * Standard Input/Output Functions
+ */
+
+#ifndef TCH_STDIO_H
+#define TCH_STDIO_H
+
+// Import C standard library
+#include <stdio.h>
+
+// Function declarations
+func printf(format: string) -> int;
+func scanf(format: string) -> int;
+func fprintf(file: void*, format: string) -> int;
+func sprintf(buffer: string, format: string) -> int;
+func fgets(buffer: string, size: int, file: void*) -> string;
+func fopen(filename: string, mode: string) -> void*;
+func fclose(file: void*) -> int;
+
+#endif /* TCH_STDIO_H */

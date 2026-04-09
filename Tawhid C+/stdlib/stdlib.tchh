@@ -1,0 +1,28 @@
+/*
+ * Tawhid C+ Standard Library - stdlib.tchh
+ * General Purpose Functions
+ */
+
+#ifndef TCH_STDLIB_H
+#define TCH_STDLIB_H
+
+#include <stdlib.h>
+
+// Memory management
+func malloc(size: int) -> void*;
+func free(ptr: void*);
+func calloc(count: int, size: int) -> void*;
+func realloc(ptr: void*, new_size: int) -> void*;
+
+// Utility functions
+func atoi(str: string) -> int;
+func atof(str: string) -> float;
+func abs(n: int) -> int;
+func rand() -> int;
+func srand(seed: int);
+
+// Environment
+func exit(code: int);
+func system(command: string) -> int;
+
+#endif /* TCH_STDLIB_H */

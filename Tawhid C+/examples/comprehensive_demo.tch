@@ -1,0 +1,217 @@
+// Comprehensive Tawhid C+ Example Program
+// Demonstrates modern features: type inference, error handling, defer, structs with methods
+
+import stdio;
+import stdlib;
+import string;
+
+// ============================================
+// Structure with Methods
+// ============================================
+
+struct Person {
+    string name;
+    int age;
+    
+    // Method to introduce person
+    func introduce(self) {
+        printf("Hi, I'm %s and I'm %d years old.\n", 
+               self.name, self.age);
+    }
+    
+    // Method to check if adult
+    func is_adult(self) -> bool {
+        return self.age >= 18;
+    }
+}
+
+// ============================================
+// Error Handling with Result Type
+// ============================================
+
+func create_person(name: string, age: int) -> result<Person, string> {
+    if age < 0 {
+        return Err("Age cannot be negative");
+    }
+    if age > 150 {
+        return Err("Age seems unrealistic");
+    }
+    if string.length(name) == 0 {
+        return Err("Name cannot be empty");
+    }
+    return Ok(Person(name, age));
+}
+
+// ============================================
+// Memory Management with Defer
+// ============================================
+
+func process_data() -> int {
+    // Memory will be automatically freed when scope exits
+    buffer := malloc(1024);
+    defer free(buffer);
+    
+    // Another allocation
+    data := malloc(512);
+    defer free(data);
+    
+    // Use the buffers safely
+    printf("Processing data with automatic cleanup...\n");
+    
+    // Both buffer and data will be freed in reverse order
+    return 0;
+}
+
+// ============================================
+// Pointer Safety Demonstration
+// ============================================
+
+func pointer_safety_demo() {
+    // Traditional pointer with null check
+    int* ptr = NULL;
+    
+    // Safe: compiler verifies null check
+    if (ptr != NULL) {
+        printf("Value: %d\n", *ptr);
+    } else {
+        printf("Pointer is null, safe to skip\n");
+    }
+    
+    // Null-safe operator example
+    value := ptr?.value ?? 0;  // If ptr is null, use 0
+    printf("Safe value: %d\n", value);
+}
+
+// ============================================
+// Array with Bounds Checking
+// ============================================
+
+func array_demo() {
+    // Fixed-size array with bounds checking
+    numbers := array<int, 5>{10, 20, 30, 40, 50};
+    
+    printf("Array elements: ");
+    for i in 0..5 {
+        printf("%d ", numbers[i]);
+    }
+    printf("\n");
+    
+    // Range-based for loop
+    sum := 0;
+    for num in numbers {
+        sum += num;
+    }
+    printf("Sum: %d\n", sum);
+}
+
+// ============================================
+// Pattern Matching
+// ============================================
+
+enum Status {
+    Success,
+    Failed,
+    Pending,
+}
+
+func check_status(status: Status) {
+    match status {
+        Success => printf("Operation completed successfully\n");
+        Failed => printf("Operation failed\n");
+        Pending => printf("Operation is pending\n");
+    }
+}
+
+// ============================================
+// Traditional C-style Function
+// ============================================
+
+int add(int a, int b) {
+    return a + b;
+}
+
+// ============================================
+// Modern Function with Type Inference
+// ============================================
+
+func multiply(a: int, b: int) -> int {
+    return a * b;
+}
+
+// ============================================
+// Main Function
+// ============================================
+
+func main() -> int {
+    printf("=== Welcome to Tawhid C+ ===\n\n");
+    
+    // Type inference demonstration
+    greeting := "This is a comprehensive demo!";
+    printf("%s\n\n", greeting);
+    
+    // Structure with methods
+    printf("--- Person Structure ---\n");
+    try {
+        person := try create_person("Alice", 30);
+        person.introduce();
+        
+        if person.is_adult() {
+            printf("%s is an adult\n", person.name);
+        }
+    } catch string error {
+        printf("Error creating person: %s\n", error);
+        return 1;
+    }
+    printf("\n");
+    
+    // Error handling
+    printf("--- Error Handling ---\n");
+    try {
+        invalid_person := try create_person("", -5);
+        invalid_person.introduce();
+    } catch string error {
+        printf("Expected error: %s\n", error);
+    }
+    printf("\n");
+    
+    // Memory management
+    printf("--- Memory Management ---\n");
+    process_data();
+    printf("Memory automatically cleaned up!\n\n");
+    
+    // Pointer safety
+    printf("--- Pointer Safety ---\n");
+    pointer_safety_demo();
+    printf("\n");
+    
+    // Array operations
+    printf("--- Array Demo ---\n");
+    array_demo();
+    printf("\n");
+    
+    // Pattern matching
+    printf("--- Pattern Matching ---\n");
+    check_status(Success);
+    check_status(Pending);
+    printf("\n");
+    
+    // Traditional and modern functions
+    printf("--- Function Styles ---\n");
+    result1 := add(10, 20);
+    result2 := multiply(10, 20);
+    printf("Traditional add(10, 20) = %d\n", result1);
+    printf("Modern multiply(10, 20) = %d\n", result2);
+    printf("\n");
+    
+    // Defer demonstration
+    printf("--- Defer Statement ---\n");
+    {
+        resource := malloc(256);
+        defer free(resource);
+        printf("Resource allocated, will be auto-freed at scope end\n");
+    }
+    printf("Resource has been freed\n\n");
+    
+    printf("=== Demo Complete ===\n");
+    return 0;
+}

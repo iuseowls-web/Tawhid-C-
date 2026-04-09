@@ -1,0 +1,10 @@
+// Hello, World! in Tawhid C+
+// This is the simplest program demonstrating basic Tawhid C+ syntax
+
+import stdio;
+
+// Main function - entry point
+func main() -> int {
+    printf("Hello, World!\n");
+    return 0;
+}
